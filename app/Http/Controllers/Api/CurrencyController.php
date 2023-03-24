@@ -36,11 +36,16 @@ class CurrencyController extends Controller
 
         foreach ($data[0]['rates'] as $rate) {
             //Początkowy test czy zapisuje wszystkie
-            $currency = new Currency;
-            $currency->name = $rate['currency'];
-            $currency->currency_code = $rate['code'];
-            $currency->exchange_rate = $rate['mid'];
-            $currency->save();
+            $check_currency = Currency::where('currency_code', $rate['code'])->first();
+            if($check_currency){
+                Currency::where('currency_code', $rate['code'])->update(['exchange_rate' => $rate['mid']]);
+            } else {
+                $currency = new Currency;
+                $currency->name = $rate['currency'];
+                $currency->currency_code = $rate['code'];
+                $currency->exchange_rate = $rate['mid'];
+                $currency->save();
+            }
         }
 
         return 'Kursy walut zostały zaktualizowane.';
