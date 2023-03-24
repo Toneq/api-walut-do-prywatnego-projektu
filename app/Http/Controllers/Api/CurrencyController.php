@@ -37,7 +37,7 @@ class CurrencyController extends Controller
         foreach ($data[0]['rates'] as $rate) {
             //Początkowy test czy zapisuje wszystkie
             $currency = new Currency;
-            $currency->name = $rate['Currency'];
+            $currency->name = $rate['currency'];
             $currency->currency_code = $rate['code'];
             $currency->exchange_rate = $rate['mid'];
             $currency->save();
